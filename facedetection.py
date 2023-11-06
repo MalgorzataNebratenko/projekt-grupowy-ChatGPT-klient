@@ -2,9 +2,13 @@ from deepface import DeepFace
 import pandas as pd
 import os
 
-img_path="E:/Projekty/FaceDetectionDB/img.jpg"
+file_path = os.getcwd().replace("\\", "/")
 
-db_path="E:/Projekty/FaceDetectionDB/face"
+# wskazanie pojedynczego zdjęcia do porównania
+img_path = file_path + "/img.jpg"
+
+# wskazanie miejsca bazy zdjęć (w postaci folderu), w którym znajdują sie zdjęcia do porównania
+db_path = file_path + "/face"
 
 def compare_faces():
 
@@ -23,6 +27,10 @@ def compare_faces():
     closestImage = os.path.basename(dbPathResult)
     
     name, _= os.path.splitext(closestImage)
+    
+    #print("Cosine value:")
+    #print(frame.get('VGG-Face_cosine')[0])
+    
     # wypisanie imienia na podstawie nazwy zdjęcia
     return name
     
