@@ -6,17 +6,22 @@
     <title>Webcam</title>
 </head>
 <body>
-    <!-- Stream video via webcam -->
-    <div class="video-wrap">
-        <video id="video" playsinline autoplay></video>
-    </div>
-    <!-- Trigger canvas web API -->
-    <div class="controller">
-        <button id="snap">Zacznij rozmowę</button>
-    </div>
-    <!-- Webcam video snapshot -->
-    <canvas id="canvas" width="640" height="480"></canvas>
-
-    <script src="webcam.js"></script>
+    <body>
+        <div class="video-wrap">
+            <video id="video" playsinline autoplay></video>
+        </div>
+        <div class="controller">
+            <button id="snap">Zrób zdjęcie</button>
+            <button id="save">Zapisz zdjęcie</button>
+            <button id="send">Wyślij na serwer</button>
+        </div>
+        <canvas id="canvas" width="640" height="480"></canvas>
+    
+        <input type="text" id="imageName" placeholder="Nazwa zdjęcia">
+        <img id="capturedImage" style="display:none;">
+        <span id="errorMsg"></span>
+    
+        <script src="webcam.js"></script>
+    </body>
 </body>
 </html>
