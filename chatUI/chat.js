@@ -1,6 +1,12 @@
 var chatContainer = document.querySelector('.msg-page');
 var msgButton = document.querySelector('#send-msg-btn');
 var inputField = document.querySelector('#msg-input-field');
+var msgModeButton = document.querySelector('#mode-btn');
+
+msgModeButton.addEventListener('click', function() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+});
 
 function createMessage(message, time, isOutgoing) {
     var messageContainer = document.createElement('div');
