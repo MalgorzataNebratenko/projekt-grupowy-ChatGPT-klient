@@ -7,7 +7,7 @@
 </head>
 <body>
     <body>
-        <div class="video-wrap">
+        <div class="video-wrap" style="visibility: hidden;  position: absolute; left: -9999px">
             <video id="video" playsinline autoplay></video>
         </div>
         <div class="controller">
@@ -15,13 +15,17 @@
             <button id="save">Zapisz zdjęcie</button>
             <button id="send">Wyślij na serwer</button>
         </div>
-        <canvas id="canvas" width="640" height="480"></canvas>
-    
-        <input type="text" id="imageName" placeholder="Nazwa zdjęcia">
-        <img id="capturedImage" style="display:none;">
+        <div style="visibility: hidden; position: absolute; left: -9999px">
+          <canvas id="canvas" width="320" height="240"></canvas>
+        </div>
+        
+        <!-- <input type="text" id="imageName" placeholder="Nazwa zdjęcia"> -->
+        
         <span id="errorMsg"></span>
+        <img id="capturedImage" style="display:none;">
     
         <script src="webcam.js"></script>
     </body>
 </body>
 </html>
+

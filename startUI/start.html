@@ -28,14 +28,24 @@
         <div class="img">
           <img src="chatbot.png" />
         </div>
-        <button class="start-button">
+        <div class="video-wrap" style="visibility: hidden;  position: absolute; left: -9999px">
+          <video id="video" playsinline autoplay></video>
+        </div>
+        <div style="visibility: hidden; position: absolute; left: -9999px">
+          <canvas id="canvas" width="320" height="240"></canvas>
+        </div>
+        <button id="start-btn" class="start-button" onclick="goToChatPage()">
         Porozmawiaj!
         </button>
       </div>
       <!-- bottom section -->
       <div class="bottom">
         <p>Projekt grupowy</p>
+      </br>
+        <p>Dominik Bindas, Piotr Drobina, Konrad Gajdziński, Julia Kulczycka,
+           Małgorzata Nebratenko, Krzysztof Stokop, Jakub Waliszewski, Bartosz Wójcik</p>
       </div>
     </div>
+    <script src="start.js"></script>
   </body>
 </html>

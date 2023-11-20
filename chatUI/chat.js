@@ -54,7 +54,7 @@ function getCurrentTime() {
 }
 
 function scrollToBottom() {
-    var chatContainer = document.querySelector('.msg-inbox');
+    var chatContainer = document.querySelector('.msg-page');
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
