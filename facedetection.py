@@ -10,14 +10,15 @@ img_path = file_path + "/img.jpg"
 # wskazanie miejsca bazy zdjęć (w postaci folderu), w którym znajdują sie zdjęcia do porównania
 db_path = file_path + "/face"
 
-def compare_faces():
+def compareFaces():
 
     # porównanie zdjęcia wejciowego ze zbiorem zdjęć znajdującymi się w podanym folderze
     # zwraca wszystkie podobne zdjęcia do podanego
     try:
         result = DeepFace.find(img_path, db_path)
     except ValueError:
-        return "Nie rozpoznano twarzy"
+        # w przypadku nierozpoznania twarzy
+        return ""
 
     frame = pd.DataFrame(result[0])
 
@@ -33,5 +34,7 @@ def compare_faces():
     
     # wypisanie imienia na podstawie nazwy zdjęcia
     return name
-    
-print(compare_faces())
+
+def createFaceLabelFile():
+    with open('name.txt', 'w') as text_file:
+        text_file.write(compareFaces())
