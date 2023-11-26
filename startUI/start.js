@@ -50,12 +50,14 @@ snap.addEventListener('click', function () {
     // capturedImage.style.display = "block";
 });
 
-// Send image (simulate sending to a server)
-function sendImageToServer(){
+function sendImageToServer() {
     if (capturedImageData) {
+        // Przygotuj dane do wysłania na serwer jako obiekt Blob
+        const blobData = dataURLtoBlob(capturedImageData);
+        
         // Przygotuj dane do wysłania na serwer
         const formData = new FormData();
-        formData.append('image', capturedImageData);
+        formData.append('image', blobData);
 
         // Wysyłanie danych na serwer przy użyciu Fetch API
         fetch('https://example.com/upload', {
@@ -74,6 +76,21 @@ function sendImageToServer(){
             console.error('Błąd podczas przesyłania zdjęcia na serwer:', error);
         });
     }
+}
+
+// Funkcja konwertująca dane URL do obiektu Blob
+function dataURLtoBlob(dataURL) {
+    const byteString = atob(dataURL.split(',')[1]);
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([arrayBuffer], { type: mimeString });
 }
 
 

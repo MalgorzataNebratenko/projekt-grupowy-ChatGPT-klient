@@ -2,6 +2,8 @@ var chatContainer = document.querySelector('.msg-page');
 var msgButton = document.querySelector('#send-msg-btn');
 var inputField = document.querySelector('#msg-input-field');
 var msgModeButton = document.querySelector('#mode-btn');
+const mySlider = document.getElementById("my-slider");
+const sliderValue = document.getElementById("slider-value");
 
 msgModeButton.addEventListener('click', function() {
   var element = document.body;
@@ -37,7 +39,7 @@ msgButton.addEventListener('click', function() {
   if (userMessage.trim() !== '') {
     createMessage(userMessage, getCurrentTime(), true);
     inputField.value = ''; // Wyczyść pole input
-    scrollToBottom(); // Opcjonalne przewinięcie do najnowszej wiadomości
+    scrollToBottom(); 
   }
 });
 
@@ -57,6 +59,13 @@ function scrollToBottom() {
     var chatContainer = document.querySelector('.msg-page');
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
+
+function slider(){
+    valPercent = (mySlider.value / mySlider.max)*100;
+    mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
+    sliderValue.textContent = mySlider.value;
+}
+
 
 // // Przykład użycia dla wiadomości przychodzącej
 // createMessage("Hi !! This is a message from Riya.", "Riya", "18:06 PM | July 24", false);
