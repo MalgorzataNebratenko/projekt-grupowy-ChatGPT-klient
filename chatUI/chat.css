@@ -46,7 +46,8 @@ img {
     height: 35px;
     vertical-align: middle;
     border-style: none;
-
+    cursor:pointer;
+    background: none;
 }
 .darkMode {
     float: right;
@@ -192,6 +193,8 @@ img {
     padding: 0 0 0 10px;
     vertical-align: top;
     width: 92%;
+    overflow: hidden;
+    margin: 26px 20px;
 }
 .received-msg-inbox {
     max-width: 57%;
@@ -386,6 +389,11 @@ input[type="range"]:active::-webkit-slider-thumb{
     align-items: center;
     border-radius: 5px;
     margin-left: auto; 
+}
+
+.button-mute{
+    border: none;
+    background: none;
 }
 
 
