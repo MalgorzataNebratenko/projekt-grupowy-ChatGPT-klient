@@ -4,6 +4,14 @@ var inputField = document.querySelector('#msg-input-field');
 var msgModeButton = document.querySelector('#mode-btn');
 const mySlider = document.getElementById("my-slider");
 const sliderValue = document.getElementById("slider-value");
+var recognisedUser = false;
+const muteImg = document.getElementById("mute-img");
+const micBtn  = document.getElementById("mic-btn");
+
+let isRecording = false;
+
+micBtn.addEventListener("mousedown", startRecording);
+micBtn.addEventListener("mouseup", stopRecording);
 
 msgModeButton.addEventListener('click', function() {
   var element = document.body;
@@ -64,6 +72,55 @@ function slider(){
     valPercent = (mySlider.value / mySlider.max)*100;
     mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
     sliderValue.textContent = mySlider.value;
+
+    if(mySlider.value == 0){  
+      muteImg.src = './mute.png';
+    }
+    else{
+      muteImg.src = './unmute.png';
+    }
+    
+}
+
+function firstMessage(){
+  if(recognisedUser){
+    userMessage = "Witaj ... o czym chciałbyś dzisiaj porozmawiać?";
+  }
+  else{
+    
+    userMessage = "Cześć nieznajomy, jak masz na imię?";
+  }
+  createMessage(userMessage, getCurrentTime(), false);
+}
+firstMessage();
+
+function changeMuteBtnImage(){
+  if (mySlider.value > 0) {
+    //audio.muted = true;
+    mySlider.value = 0; 
+    muteImg.src = './mute.png';
+    slider();
+}
+
+else {
+    //audio.muted = false;
+    mySlider.value = 50;
+    muteImg.src = './unmute.png';
+    slider();
+}
+}
+
+function startRecording() {
+  isRecording = true;
+  console.log("Rozpoczęto nagrywanie...");
+
+}
+
+function stopRecording() {
+  if (isRecording) {
+    isRecording = false;
+    console.log("Zakończono nagrywanie...");
+  }
 }
 
 
