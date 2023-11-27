@@ -65,36 +65,88 @@ img {
     flex-direction: column;
     gap: 10px;
 }
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+  }
+  
+  /* The popup form - hidden by default */
+  .form-popup {
+    height: 350px;
+    width: 300px;
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    background-color: white;
+    padding: 10px;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 400px;
+  }
+  
+  /* Set a style for the submit/login button */
+  .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  
+  /* Add a red background color to the cancel button */
+ .cancel {
+    background-color: red;
+  }
+  
+  /* Add some hover effects to buttons */
+ .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
 
 /*Styling star rating*/
 #star-rating {
     display: inline-flex;
-    height: 70px;
+    height: 60px;
     background: transparent;
     direction: rtl;
     margin: 0;
-    position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    margin-top:10px;
-    transform: translate(-50%, -50%);
+    margin-top: 10px;
   }
   #star-rating input[type="radio"] {
     display: none;
   }
   #star-rating label {
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: url('star.png');
     background-repeat: no-repeat;
     background-size: 80% 80%;
 }
   #star-rating input[type="radio"]:checked ~ label {
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: url("star-checked.png");
     background-repeat: no-repeat;
     background-size: 80% 80%;
