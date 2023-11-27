@@ -114,20 +114,26 @@ img {
     border-top: 1px solid #ccc;
     position: relative;
     background-color: var(--clr-gray);
+    display: flex;
+    /* padding-bottom: 10px; */
     }
 /* Styling the input field */
     .input-group {
         width: 61% !important;
         border-radius: 20px;
-        margin-top: 13px;
+        height: 70%;
+        margin-top: 8px;
         margin-right: 20px;
         outline: none !important;
         background-color: var(--clr-light);
         float: right;
         position: relative;
         display: flex;
-        flex-wrap: wrap;
-        align-items: stretch;
+        /* flex-wrap: wrap; */
+        /* align-items: stretch; */
+        align-items: center;
+        justify-content: space-around;
+        align-items: center;
     }
     
     .input-group>.form-control {
@@ -186,18 +192,23 @@ img {
     display: inline-block;
     width: 50px;
     float: left;
+    /* margin-right: 1rem; */
+}
+
+.received-chats{
+    overflow: hidden;
+    margin: 26px 20px;
 }
 
 .received-msg {
     display: inline-block;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 10px  ;
     vertical-align: top;
-    width: 92%;
+    width: 80%;
     overflow: hidden;
-    margin: 26px 20px;
 }
 .received-msg-inbox {
-    max-width: 57%;
+    max-width: 46%;
     width: auto;
 }
 
@@ -384,7 +395,7 @@ input[type="range"]:active::-webkit-slider-thumb{
     width: 20%;
     position: relative;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: space-around;
     align-items: center;
     border-radius: 5px;
@@ -394,6 +405,23 @@ input[type="range"]:active::-webkit-slider-thumb{
 .button-mute{
     border: none;
     background: none;
+}
+
+.button-microphone{
+    border: none;
+    background: none;
+}
+
+.mic-container{
+    background-color: none;
+    width: 20%;
+    position: relative;
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    margin-left: auto; 
 }
 
 

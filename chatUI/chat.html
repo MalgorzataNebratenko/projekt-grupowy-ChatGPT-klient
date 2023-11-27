@@ -23,10 +23,10 @@
         </div>
         <div class="container-slider">
           <button id="mute-btn" class="button-mute" onclick=changeMuteBtnImage()>
-            <img id="mute-img" src="mute.png" class="modeimg" />
+            <img id="mute-img" src="unmute.png" class="modeimg" />
           </button>
           <input type="range" id="my-slider" min="0" max="100" value="50" oninput="slider()">
-          <!-- <div id="slider-value">50</div> -->
+          <div id="slider-value" hidden>50</div>
         </div>
         <div class="container2">
           <button id="mode-btn" class="darkMode">
@@ -42,8 +42,6 @@
           <div class="chats">
             <!-- Message container -->
             <div class="msg-page">
-              <!-- Incoming messages -->
-
               <div class="received-chats">
                 <div class="received-chats-img">
                   <img src="chatbot.png" />
@@ -61,7 +59,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Outgoing messages -->
               <div class="outgoing-chats">
                 <div class="outgoing-chats-img">
                   <img src="user.png" />
@@ -117,6 +114,11 @@
           <!-- msg-bottom section -->
 
           <div class="msg-bottom">
+            <div class="mic-container">
+              <button id="mic-btn" class="button-microphone">
+                <img src="mic.png" class="modeimg" />
+              </button>
+            </div>
             <div class="input-group">
               <input
                 type="text"
