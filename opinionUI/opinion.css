@@ -10,7 +10,7 @@
 }
 
 /* Styling the chatbot image  */
-img {
+img-opinion {
     width: 200px;
     border-style: none;
     display: block;
@@ -22,28 +22,30 @@ img {
 .open-button {
     background-color: #39A2DB;
     color: white;
-    padding: 16px 20px;
+    padding: 16px;
     border: none;
     cursor: pointer;
     opacity: 0.8;
     position: fixed;
     bottom: 23px;
-    right: 28px;
-    width: 280px;
+    left: 40px;
+    width: 80px;
+    border-radius: 20px;
   }
   
   /* The popup form - hidden by default */
   .form-popup {
-    height: 350px;
-    width: 300px;
+    height: 50%;
+    top: 25%;
+    width: 20%;
+    left: 40%;
     display: none;
     position: fixed;
-    bottom: 0;
-    right: 15px;
     border: 3px solid #f1f1f1;
     z-index: 9;
     background-color: white;
     padding: 10px;
+    text-align: center;
   }
   
   /* Add styles to the form container */
@@ -77,7 +79,7 @@ img {
     margin: 0;
     top: 50%;
     left: 50%;
-    margin-left: 40px;
+    margin-left: 4%;
     margin-top: 10px;
   }
   #star-rating input[type="radio"] {
