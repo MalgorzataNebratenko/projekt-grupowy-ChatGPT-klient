@@ -3,7 +3,6 @@
     <title>Opinion UI Design</title>
     <link rel="stylesheet" href="opinion.css" />
 
-    <!-- Import this CDN to use icons -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
@@ -13,57 +12,26 @@
   <body>
     <!-- Main container -->
     <div class="container">
-      <!-- header section starts -->
-      <div class="header">
-        <div class="container1">
-          <div class="active">
-            <p>Chat bot MAI</p>
-          </div>
+      <button class="open-button" onclick="openForm()">Open Form</button>
+      <div class="form-popup" id="myForm">
+        <div class="img">
+          <img src="chatbot.png" />
         </div>
-      </div>
-      <!-- header section ends -->
-
-      <!-- Chat inbox  -->
-      <div class="page">
-        <button class="open-button" onclick="openForm()">Open Form</button>
-
-<div class="form-popup" id="myForm">
-  <!-- <form action="/action_page.php" class="form-container"> -->
-    <!-- <h1>Rate us</h1> -->
-    <div class="img">
-      <img src="chatbot.png" />
-    </div>
-    <!-- <div class="video-wrap" style="visibility: hidden;  position: absolute; left: -9999px">
-      <video id="video" playsinline autoplay></video>
-    </div>
-    <div style="visibility: hidden; position: absolute; left: -9999px">
-      <canvas id="canvas" width="300" height="350"></canvas>
-    </div> -->
-    <div>
-    <form action="" method="post" id="star-rating">
-        <input type="radio" id="star5" name="rating" value="5" />
-        <label for="star5" title="5 stars"></label>
-        <input type="radio" id="star4" name="rating" value="4" />
-        <label for="star4" title="4 stars"></label>
-        <input type="radio" id="star3" name="rating" value="3" />
-        <label for="star3" title="3 stars"></label>
-        <input type="radio" id="star2" name="rating" value="2" />
-        <label for="star2" title="2 stars"></label>
-        <input type="radio" id="star1" name="rating" value="1" />
-        <label for="star1" title="1 star"></label>
-      </form>
-    </div>
-    <button type="submit" class="btn" onclick="closeForm()">Submit</button>
-    <!-- <button type="button" class="btn cancel" >Close</button> -->
-  </div>
-</div>
-        
-      <!-- bottom section -->
-      <div class="bottom">
-        <p>Projekt grupowy</p>
-      </br>
-        <p style="font-size: small;">Dominik Bindas, Piotr Drobina, Konrad Gajdziński, Julia Kulczycka,
-           Małgorzata Nebratenko, Krzysztof Stokop, Jakub Waliszewski, Bartosz Wójcik</p>
+        <div>
+        <form action="" method="post" id="star-rating">
+            <input type="radio" id="star5" name="rating" value="5" />
+            <label for="star5" title="5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" />
+            <label for="star4" title="4 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" />
+            <label for="star3" title="3 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" />
+            <label for="star2" title="2 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1" />
+            <label for="star1" title="1 star"></label>
+          </form>
+        </div>
+        <button type="submit" class="btn" onclick="closeForm()">Submit</button>
       </div>
     </div>
   </body>
