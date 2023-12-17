@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Start UI Design</title>
-    <link rel="stylesheet" href="start.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='start.css') }}" />
 
     <!-- Import this CDN to use icons -->
     <link
@@ -46,6 +46,6 @@
            Małgorzata Nebratenko, Krzysztof Stokop, Jakub Waliszewski, Bartosz Wójcik</p>
       </div>
     </div>
-    <script src="start.js"></script>
+    <script src="{{ url_for('static', filename='start.js') }}"></script>
   </body>
 </html>

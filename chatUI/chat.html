@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Chat Box UI Design</title>
-    <link rel="stylesheet" href="chat.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}" />
 
     <link
       rel="stylesheet"
@@ -154,6 +154,6 @@
         </div>
       </div>
     </div>
-    <script src="chat.js"></script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
   </body>
 </html>

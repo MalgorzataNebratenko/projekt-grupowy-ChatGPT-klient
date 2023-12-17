@@ -1,5 +1,8 @@
 'use strict';
 
+// uruchomienie do pythona ze ścieżki startUI :))
+// python -m http.server
+
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const snap = document.getElementById('start-btn');
