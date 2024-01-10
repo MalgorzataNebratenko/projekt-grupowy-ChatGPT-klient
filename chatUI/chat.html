@@ -139,6 +139,7 @@
               </button>
             </div>
             <div class="input-group">
+              <form action="127.0.0.1:5000/message" method="POST"></form>
               <input
                 type="text"
                 id="msg-input-field"
@@ -146,9 +147,10 @@
                 placeholder="Write message..."
               />
 
-              <button id="send-msg-btn" class="input-group-text send-icon">
+              <button id="send-msg-btn" class="input-group-text send-icon" type="submit" value="Send">
                 <i class="bi bi-send"></i>
               </button>
+            </form>
             </div>
           </div>
         </div>
