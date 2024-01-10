@@ -15,19 +15,19 @@
       <!-- msg-header section starts -->
       <div class="msg-header">
         <div class="container1">
-          <img src="user.png" class="msgimg" />
+          <img src="{{ url_for('static', filename="user.png") }}" class="msgimg" />
           <div class="active">
             <p>User name</p>
           </div>
         </div>
         <div class="container2">
           <button id="mode-btn" class="darkMode">
-            <img src="brightness.png" class="modeimg" />
+            <img src="{{ url_for('static', filename="brightness.png") }}" class="modeimg" />
           </button>
         </div>
         <div class="container-slider">
           <button id="mute-btn" class="button-mute" onclick=changeMuteBtnImage()>
-            <img id="mute-img" src="unmute.png" class="modeimg" />
+            <img id="mute-img" src="{{ url_for('static', filename="unmute.png") }}" class="modeimg" />
           </button>
           <input type="range" id="my-slider" min="0" max="100" value="50" oninput="slider()">
           <div id="slider-value" hidden>50</div>
@@ -43,7 +43,7 @@
             <div class="msg-page">
               <div class="received-chats">
                 <div class="received-chats-img">
-                  <img src="chatbot.png" />
+                  <img src="{{ url_for('static', filename="chatbot.png") }}" />
                 </div>
                 <div class="received-msg">
                   <div class="received-msg-inbox">
@@ -60,7 +60,7 @@
               </div>
               <div class="outgoing-chats">
                 <div class="outgoing-chats-img">
-                  <img src="user.png" />
+                  <img src="{{ url_for('static', filename="user.png") }}" /> 
                 </div>
                 <div class="outgoing-msg">
                   <div class="outgoing-chats-msg">
@@ -79,7 +79,7 @@
               </div>
               <div class="received-chats">
                 <div class="received-chats-img">
-                  <img src="chatbot.png" />
+                  <img src="{{ url_for('static', filename="chatbot.png") }}"/>
                 </div>
                 <div class="received-msg">
                   <div class="received-msg-inbox">
@@ -94,7 +94,7 @@
               </div>
               <div class="outgoing-chats">
                 <div class="outgoing-chats-img">
-                  <img src="user.png" />
+                  <img src="{{ url_for('static', filename="user.png") }}" />
                 </div>
                 <div class="outgoing-msg">
                   <div class="outgoing-chats-msg">
@@ -115,7 +115,7 @@
             <div class="form-popup" id="myForm">
               How was the conversation?
               <div>
-                <img class="img-opinion" src="chatbot.png" />
+                <img class="img-opinion" src="{{ url_for('static', filename='chatbot.png') }}" />
               </div>
               <div>
               <form action="" method="post" id="star-rating">
@@ -135,7 +135,7 @@
             </div>
             <div class="mic-container">
               <button id="mic-btn" class="button-microphone">
-                <img src="mic.png" class="modeimg" />
+                <img src="{{ url_for('static', filename='mic.png') }}" class="modeimg" />
               </button>
             </div>
             <div class="input-group">

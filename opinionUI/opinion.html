@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Opinion UI Design</title>
-    <link rel="stylesheet" href="opinion.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='opinion.css') }}" />
 
     <link
       rel="stylesheet"
@@ -16,7 +16,7 @@
       <div class="form-popup" id="myForm">
         How was the conversation?
         <div class="img-opinion">
-          <img src="chatbot.png" />
+          <img src="{{ url_for('static', filename='chatbot.png') }}" />
         </div>
         <div>
         <form action="" method="post" id="star-rating">
