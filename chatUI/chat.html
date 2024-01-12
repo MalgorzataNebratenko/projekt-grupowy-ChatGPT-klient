@@ -1,7 +1,10 @@
 <html>
   <head>
     <title>Chat Box UI Design</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='chat.css') }}"
+    />
 
     <link
       rel="stylesheet"
@@ -15,21 +18,35 @@
       <!-- msg-header section starts -->
       <div class="msg-header">
         <div class="container1">
-          <img src="{{ url_for('static', filename="user.png") }}" class="msgimg" />
+          <img src="{{ url_for('static', filename="user.png") }}" class="msgimg"
+          />
           <div class="active">
             <p>User name</p>
           </div>
         </div>
         <div class="container2">
           <button id="mode-btn" class="darkMode">
-            <img src="{{ url_for('static', filename="brightness.png") }}" class="modeimg" />
+            <img src="{{ url_for('static', filename="brightness.png") }}"
+            class="modeimg" />
           </button>
         </div>
         <div class="container-slider">
-          <button id="mute-btn" class="button-mute" onclick=changeMuteBtnImage()>
-            <img id="mute-img" src="{{ url_for('static', filename="unmute.png") }}" class="modeimg" />
+          <button
+            id="mute-btn"
+            class="button-mute"
+            onclick="changeMuteBtnImage()"
+          >
+            <img id="mute-img" src="{{ url_for('static', filename="unmute.png")
+            }}" class="modeimg" />
           </button>
-          <input type="range" id="my-slider" min="0" max="100" value="50" oninput="slider()">
+          <input
+            type="range"
+            id="my-slider"
+            min="0"
+            max="100"
+            value="50"
+            oninput="slider()"
+          />
           <div id="slider-value" hidden>50</div>
         </div>
       </div>
@@ -60,7 +77,7 @@
               </div>
               <div class="outgoing-chats">
                 <div class="outgoing-chats-img">
-                  <img src="{{ url_for('static', filename="user.png") }}" /> 
+                  <img src="{{ url_for('static', filename="user.png") }}" />
                 </div>
                 <div class="outgoing-msg">
                   <div class="outgoing-chats-msg">
@@ -115,10 +132,13 @@
             <div class="form-popup" id="myForm">
               How was the conversation?
               <div>
-                <img class="img-opinion" src="{{ url_for('static', filename='chatbot.png') }}" />
+                <img
+                  class="img-opinion"
+                  src="{{ url_for('static', filename='chatbot.png') }}"
+                />
               </div>
               <div>
-              <form action="" method="post" id="star-rating">
+                <form action="" method="post" id="star-rating">
                   <input type="radio" id="star5" name="rating" value="5" />
                   <label for="star5" title="5 stars"></label>
                   <input type="radio" id="star4" name="rating" value="4" />
@@ -131,26 +151,36 @@
                   <label for="star1" title="1 star"></label>
                 </form>
               </div>
-              <button type="submit" class="btn" onclick="closeForm()">Submit</button>
+              <button type="submit" class="btn" onclick="closeForm()">
+                Submit
+              </button>
             </div>
             <div class="mic-container">
               <button id="mic-btn" class="button-microphone">
-                <img src="{{ url_for('static', filename='mic.png') }}" class="modeimg" />
+                <img
+                  src="{{ url_for('static', filename='mic.png') }}"
+                  class="modeimg"
+                />
               </button>
             </div>
             <div class="input-group">
-              <form action="127.0.0.1:5000/message" method="POST"></form>
-              <input
-                type="text"
-                id="msg-input-field"
-                class="form-control"
-                placeholder="Write message..."
-              />
+              <form action="127.0.0.1:5000/message" method="POST">
+                <input
+                  type="text"
+                  id="msg-input-field"
+                  class="form-control"
+                  placeholder="Write message..."
+                />
 
-              <button id="send-msg-btn" class="input-group-text send-icon" type="submit" value="Send">
-                <i class="bi bi-send"></i>
-              </button>
-            </form>
+                <button
+                  id="send-msg-btn"
+                  class="input-group-text send-icon"
+                  type="submit"
+                  value="Send"
+                >
+                  <i class="bi bi-send"></i>
+                </button>
+              </form>
             </div>
           </div>
         </div>
