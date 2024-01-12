@@ -22,7 +22,7 @@ const constraints = {
 
 //dodanie opóźnienia czasowego żeby zdążyć przesłać zdjęcie
 function goToChatPage() {
-    setTimeout(() => {  window.location.href = "../chatUI/chat.html"; }, 2000);
+    setTimeout(() => {  window.location.href = "chat.html"; }, 2000);
 }
 
 let capturedImageData = null;
