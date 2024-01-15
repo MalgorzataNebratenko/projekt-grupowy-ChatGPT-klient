@@ -11,9 +11,10 @@ const messageInput = document.getElementById("msg-input-field");
 const sendMessageBtn = document.getElementById("send-msg-btn");
 
 let isRecording = false;
+let audioRecorder;
+let audioChunks = [];
 
-micBtn.addEventListener("mousedown", startRecording);
-micBtn.addEventListener("mouseup", stopRecording);
+
 
 msgModeButton.addEventListener("click", function () {
   var element = document.body;
@@ -129,17 +130,47 @@ function changeMuteBtnImage() {
   }
 }
 
-function startRecording() {
-  isRecording = true;
-  console.log("Rozpoczęto nagrywanie...");
-}
+navigator.mediaDevices.getUserMedia({ audio: true })
+.then(stream => {
+    // Initialize the media recorder object
+    audioRecorder = new MediaRecorder(stream);
 
-function stopRecording() {
-  if (isRecording) {
-    isRecording = false;
-    console.log("Zakończono nagrywanie...");
-  }
-}
+    // dataavailable event is fired when the recording is stopped
+    audioRecorder.addEventListener('dataavailable', e => {
+        audioChunks.push(e.data);
+    });
+
+    audioRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const formData = new FormData();
+        formData.append('audio', audioBlob);
+
+        // Post data to server
+        //fetch('/upload', {
+        //    method: 'POST',
+        //    body: formData,
+        //});
+        audioChunks = [];
+    };
+
+    // Start recording when the button is clicked and held
+    micBtn.addEventListener('mousedown', () => {
+        if (!isRecording) {
+            isRecording = true;
+            audioRecorder.start();
+        }
+    });
+
+    // Stop recording when the button is released
+    micBtn.addEventListener('mouseup', () => {
+        if (isRecording) {
+            audioRecorder.stop();
+            isRecording = false;
+        }
+    });
+}).catch(err => {
+console.log('Error: ' + err);
+});
 
 sendMessageBtn.addEventListener("click", function () {
   var formdata = new FormData();
