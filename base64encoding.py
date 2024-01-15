@@ -17,3 +17,7 @@ def readFileData(file_name):
 def writeFileData(file_name, data): #data - dane do zapisania
     file = open(file_name, 'w')
     return file.write(data)
+
+def writeImageFileData(file_name, data):
+    img = Image.open(BytesIO(base64.b64decode(data)))
+    return img.save(file_name, 'JPEG')
