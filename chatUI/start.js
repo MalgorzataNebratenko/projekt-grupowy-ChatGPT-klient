@@ -22,7 +22,7 @@ const constraints = {
 
 //dodanie opóźnienia czasowego żeby zdążyć przesłać zdjęcie
 function goToChatPage() {
-    setTimeout(() => {  window.location.href = "chat.html"; }, 2000);
+    setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/chat"; }, 2000);
 }
 
 let capturedImageData = null;
@@ -51,36 +51,53 @@ snap.addEventListener('click', function () {
     console.log(capturedImageData);
     // capturedImage.src = capturedImageData;
     // capturedImage.style.display = "block";
+    sendImageToServer()
+    // goToChatPage()
 });
 
 function sendImageToServer() {
     if (capturedImageData) {
-        
         // Przygotuj dane do wysłania na serwer
         const formData = new FormData();
         formData.append('text', capturedImageData);
 
+        var requestOptions = {
+            method: "POST",
+            mode: 'no-cors',
+            body: formData,
+            redirect: "follow",
+        };
+
         // Wysyłanie danych na serwer przy użyciu Fetch API
-        fetch('https://example.com/upload', {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'text/plain',
-            },
-            body: capturedImageData,
-        })
-        .then(response => {
-            // Obsługa odpowiedzi od serwera
-            if (response.ok) {
-                console.log('Zdjęcie zostało przesłane na serwer.');
-            } else {
-                console.error('Błąd podczas przesyłania zdjęcia na serwer. Kod błędu:', response.status);
-            }
-        })
-        .catch(error => {
-            console.error('Błąd podczas przesyłania zdjęcia na serwer:', error);
-        });
+        fetch("http://localhost:5000/photo", requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
+
+            goToChatPage()
     }
 }
+
+// function goToNextPage() {
+    
+//         // Przygotuj dane do wysłania na serwer
+//         // const formData = new FormData();
+//         // formData.append('text', capturedImageData);
+
+//         var requestOptions = {
+//             method: "GET",
+//             mode: 'no-cors',
+//             // body: formData,
+//             redirect: "follow",
+//         };
+
+//         // Wysyłanie danych na serwer przy użyciu Fetch API
+//         fetch("http://localhost:5000/chat", requestOptions)
+//             .then((response) => response.text())
+//             .then((result) => console.log(result))
+//             .catch((error) => console.log("error", error));
+    
+// }
 
 
 // // Save image

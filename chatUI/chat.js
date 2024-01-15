@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function () {
 var chatContainer = document.querySelector(".msg-page");
 var msgButton = document.querySelector("#send-msg-btn");
 var inputField = document.querySelector("#msg-input-field");
@@ -48,14 +49,18 @@ function createMessage(message, time, isOutgoing) {
   chatContainer.appendChild(messageContainer);
 }
 
-msgButton.addEventListener("click", function () {
+// msgButton.addEventListener("click", function () {
+//  
+// });
+
+function showUserMessage(){
   var userMessage = inputField.value;
-  if (userMessage.trim() !== "") {
-    createMessage(userMessage, getCurrentTime(), true);
-    inputField.value = ""; // Wyczyść pole input
-    scrollToBottom();
-  }
-});
+    if (userMessage.trim() !== "") {
+      createMessage(userMessage, getCurrentTime(), true);
+      inputField.value = ""; // Wyczyść pole input
+      scrollToBottom();
+    }
+}
 
 function getCurrentTime() {
   var now = new Date();
@@ -143,11 +148,14 @@ function stopRecording() {
 
 sendMessageBtn.addEventListener("click", function () {
   var formdata = new FormData();
-  var message = sendMessageBtn.value();
-  formdata.append("message", "data");
+  var message = messageInput.value;
+  formdata.append("message", message);
+  console.log(formdata);
+  console.log(message);
 
   var requestOptions = {
     method: "POST",
+    mode: 'no-cors',
     body: formdata,
     redirect: "follow",
   };
@@ -156,6 +164,8 @@ sendMessageBtn.addEventListener("click", function () {
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
+
+  showUserMessage()
 });
 
 // var formdata = new FormData();
@@ -177,3 +187,5 @@ sendMessageBtn.addEventListener("click", function () {
 
 // // Przykład użycia dla wiadomości wychodzącej
 // createMessage("Hi riya, Lorem ipsum...", "User", "18:30 PM | July 24", true);
+
+});
