@@ -1,0 +1,2 @@
+let username = '';
+let messages = [];

@@ -1,4 +1,5 @@
 'use strict';
+import { username, messages } from './data.js';
 
 // uruchomienie do pythona ze ścieżki startUI :))
 // python -m http.server
@@ -11,6 +12,10 @@ const snap = document.getElementById('start-btn');
 // const imageNameInput = document.getElementById('imageName');
 const capturedImage = document.getElementById('capturedImage');
 const errorMsgElement = document.getElementById('errorMsg');
+const nameInput = document.getElementById('nameInput');
+const submitNameBtn = document.getElementById('submitName');
+const labelName = document.getElementById('labelName');
+
 
 const constraints = {
     audio: true,
@@ -48,67 +53,79 @@ var context = canvas.getContext('2d');
 snap.addEventListener('click', function () {
     context.drawImage(video, 0, 0, 320, 240);
     capturedImageData = canvas.toDataURL("image/jpeg");
-    console.log(capturedImageData);
     // capturedImage.src = capturedImageData;
     // capturedImage.style.display = "block";
     sendImageToServer()
     // goToChatPage()
 });
 
-function sendImageToServer() {
-    if (capturedImageData) {
-        // Przygotuj dane do wysłania na serwer
-        const formData = new FormData();
-        formData.append('text', capturedImageData);
+// function sendImageToServer() {
+//     if (capturedImageData) {
+//         // Usuń początkowy fragment "data:image/jpeg;base64,"
+//         const imageDataWithoutHeader = capturedImageData.split(',')[1];
+//         console.log(imageDataWithoutHeader);
 
-        var requestOptions = {
-            method: "POST",
-            mode: 'no-cors',
-            body: formData,
-            redirect: "follow",
-        };
-
-        // Wysyłanie danych na serwer przy użyciu Fetch API
-        fetch("http://localhost:5000/photo", requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.log("error", error));
-
-            goToChatPage()
-    }
-}
-
-// function goToNextPage() {
-    
 //         // Przygotuj dane do wysłania na serwer
-//         // const formData = new FormData();
-//         // formData.append('text', capturedImageData);
+//         const formData = new FormData();
+//         formData.append('imageData', imageDataWithoutHeader);
 
 //         var requestOptions = {
-//             method: "GET",
+//             method: "POST",
 //             mode: 'no-cors',
-//             // body: formData,
+//             body: formData,
 //             redirect: "follow",
 //         };
 
 //         // Wysyłanie danych na serwer przy użyciu Fetch API
-//         fetch("http://localhost:5000/chat", requestOptions)
+//         fetch("http://localhost:5000/photo", requestOptions)
 //             .then((response) => response.text())
 //             .then((result) => console.log(result))
 //             .catch((error) => console.log("error", error));
-    
+
+//         goToChatPage()
+//     }
 // }
 
+submitNameBtn.addEventListener('click', submitName);
 
-// // Save image
-// save.addEventListener('click', function () {
-//     if (capturedImageData) {
-//         const a = document.createElement('a');
-//         a.href = capturedImageData;
-//         a.download = (imageNameInput.value || 'captured-image') + '.jpg';
-//         a.click();
-//     }
-// });
+function handleServerResponse(response) {
+    if (response == 'not found') {
+        // Jeżeli odpowiedź z serwera to 'not found', pokaż pole input
+        nameInput.style.display = 'block';
+        submitNameBtn.style.display = 'block';
+        labelName.style.display = 'block'
+        // console.log('this is response',response);
 
-// Load init
+
+    } else {
+        // Jeżeli odpowiedź jest inna, wykonaj funkcję goToChatPage()
+        // console.log(response, '2');
+        username = response;
+        goToChatPage();
+    }
+}
+
+function sendImageToServer() {
+    if (capturedImageData) {
+        const imageDataWithoutHeader = capturedImageData.split(',')[1];
+        const formData = new FormData();
+        formData.append('imageData', imageDataWithoutHeader);
+
+        var requestOptions = {
+            method: "POST",
+            body: formData,
+            redirect: "follow",
+        };
+
+        fetch("http://localhost:5000/photo2", requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                // console.log(result);
+                // Obsłuż odpowiedź z serwera
+                handleServerResponse(result);
+            })
+            .catch((error) => console.log("error", error));
+    }
+}
+
 init();
