@@ -1,6 +1,6 @@
 'use strict';
 // import { username, messages } from './data.js';
-import './data.js'
+import * as data from './data.js';
 
 // uruchomienie do pythona ze ścieżki startUI :))
 // python -m http.server
@@ -101,7 +101,7 @@ function handleServerResponse(response) {
     } else {
         // Jeżeli odpowiedź jest inna, wykonaj funkcję goToChatPage()
         // console.log(response, '2');
-        username = response;
+        data.setUsername(response);
         goToChatPage();
     }
 }

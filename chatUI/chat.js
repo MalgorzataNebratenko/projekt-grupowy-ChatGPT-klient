@@ -1,5 +1,5 @@
 // import { username, messages } from 'data.js';
-import './data.js'
+import * as data from './data.js';
 document.addEventListener("DOMContentLoaded", function () {
   var chatContainer = document.querySelector(".msg-page");
   var msgButton = document.querySelector("#send-msg-btn");
@@ -13,6 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const micBtn = document.getElementById("mic-btn");
   const messageInput = document.getElementById("msg-input-field");
   const sendMessageBtn = document.getElementById("send-msg-btn");
+  const displayUsername = document.getElementById("display_username");
+
+  const username = data.getUsername();
+  displayUsername.textContent = username;
 
   let isRecording = false;
   let audioRecorder;
