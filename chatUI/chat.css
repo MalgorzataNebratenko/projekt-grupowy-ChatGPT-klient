@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 * {
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Bungee', sans-serif;
 }
 
 :root {
@@ -103,6 +103,7 @@ img {
 
 .chats {
     padding: 30px 15px 0 25px;
+    
 }
 
 .msg-page {
@@ -230,6 +231,7 @@ img {
     }
     
     .input-group>.form-control {
+        font-family: 'Roboto', sans-serif;
         position: relative;
         flex: 1 1 auto;
         width: 1%;
@@ -305,6 +307,7 @@ img {
 }
 
 .received-msg-inbox p {
+    font-family: 'Roboto', sans-serif;
     background: var(--clr-gray) none repeat scroll 0 0;
     border-radius: 10px;
     color: var(--clr-dark-gray);
@@ -315,14 +318,16 @@ img {
 }
     p {
     overflow-wrap: break-word;
+    margin: 6px;
 }
 
 /* Styling the msg-sent time  */
 .time {
-    color: var(--clr-dark-gray);
+    font-family: 'Roboto', sans-serif;
+    color: #B2B8BF;
     display: block;
-    font-size: 12px;
-    margin: 8px 0 0;
+    font-size: 10px;
+    margin: 0 0 0;
 }
 
 .outgoing-chats-msg .time {
@@ -335,6 +340,7 @@ img {
 }
 
 .outgoing-chats-msg p {
+    font-family: 'Roboto', sans-serif;
     background-color: #3a12ff;
     background-image: radial-gradient(circle at 50.3% 44.5%, rgb(116, 147, 179) 0%, rgb(62, 83, 104) 100.2%);
     color: var(--clr-light);
@@ -395,6 +401,7 @@ img {
         max-height: none;
     }
     .received-msg-inbox p {
+        font-family: 'Roboto', sans-serif;
         font-size: 28px;
     }
     .outgoing-chats-msg p {
