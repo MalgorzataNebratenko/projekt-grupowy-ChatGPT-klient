@@ -1,3 +1,5 @@
+// import { username, messages } from 'data.js';
+import './data.js'
 document.addEventListener("DOMContentLoaded", function () {
   var chatContainer = document.querySelector(".msg-page");
   var msgButton = document.querySelector("#send-msg-btn");
@@ -105,11 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function firstMessage() {
-    if (recognisedUser) {
-      userMessage = "Witaj ... o czym chciałbyś dzisiaj porozmawiać?";
-    } else {
-      userMessage = "Cześć nieznajomy, jak masz na imię?";
-    }
+    const userMessage = "Witaj " + username + ", o czym chciałbyś porozmawiać?"
+    // if (recognisedUser) {
+    //   userMessage = "Witaj ... o czym chciałbyś dzisiaj porozmawiać?";
+    // } else {
+    //   userMessage = "Cześć nieznajomy, jak masz na imię?";
+    // }
     createMessage(userMessage, getCurrentTime(), false);
   }
   firstMessage();

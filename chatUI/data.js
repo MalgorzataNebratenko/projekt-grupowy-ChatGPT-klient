@@ -1,2 +1,3 @@
-let username = '';
-let messages = [];
+globalThis.username = '';
+globalThis.messages = [];
+

@@ -1,5 +1,6 @@
 'use strict';
-import { username, messages } from './data.js';
+// import { username, messages } from './data.js';
+import './data.js'
 
 // uruchomienie do pythona ze ścieżki startUI :))
 // python -m http.server
@@ -117,7 +118,7 @@ function sendImageToServer() {
             redirect: "follow",
         };
 
-        fetch("http://localhost:5000/photo2", requestOptions)
+        fetch("http://localhost:5000/photo", requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 // console.log(result);
