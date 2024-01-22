@@ -1,154 +1,164 @@
 document.addEventListener("DOMContentLoaded", function () {
-var chatContainer = document.querySelector(".msg-page");
-var msgButton = document.querySelector("#send-msg-btn");
-var inputField = document.querySelector("#msg-input-field");
-var msgModeButton = document.querySelector("#mode-btn");
-const mySlider = document.getElementById("my-slider");
-const sliderValue = document.getElementById("slider-value");
-var recognisedUser = false;
-const muteImg = document.getElementById("mute-img");
-const micBtn = document.getElementById("mic-btn");
-const messageInput = document.getElementById("msg-input-field");
-const sendMessageBtn = document.getElementById("send-msg-btn");
+  var chatContainer = document.querySelector(".msg-page");
+  var msgButton = document.querySelector("#send-msg-btn");
+  var inputField = document.querySelector("#msg-input-field");
+  var msgModeButton = document.querySelector("#mode-btn");
+  const mySlider = document.getElementById("my-slider");
+  const sliderValue = document.getElementById("slider-value");
+  var recognisedUser = false;
+  const muteImg = document.getElementById("mute-img");
+  const muteBtn = document.getElementById("mute-btn");
+  const micBtn = document.getElementById("mic-btn");
+  const messageInput = document.getElementById("msg-input-field");
+  const sendMessageBtn = document.getElementById("send-msg-btn");
 
-let isRecording = false;
-let audioRecorder;
-let audioChunks = [];
+  let isRecording = false;
+  let audioRecorder;
+  let audioChunks = [];
 
+  msgModeButton.addEventListener("click", function () {
+    var element = document.body;
+    element.classList.toggle("dark-mode");
+  });
 
+  function createMessage(message, time, isOutgoing) {
+    var messageContainer = document.createElement("div");
+    messageContainer.classList.add(
+      isOutgoing ? "outgoing-chats" : "received-chats"
+    );
 
-msgModeButton.addEventListener("click", function () {
-  var element = document.body;
-  element.classList.toggle("dark-mode");
-});
+    var messageImage = document.createElement("div");
+    messageImage.classList.add(
+      isOutgoing ? "outgoing-chats-img" : "received-chats-img"
+    );
+    var imageSrc = isOutgoing ? "http://127.0.0.1:5000/chatUI/user.png" : "http://127.0.0.1:5000/chatUI/chatbot.png";
+    
+// http://127.0.0.1:5000/chatUI/chatbot.png
+    messageImage.innerHTML = `<img src="${imageSrc}" />`;
 
-function createMessage(message, time, isOutgoing) {
-  var messageContainer = document.createElement("div");
-  messageContainer.classList.add(
-    isOutgoing ? "outgoing-chats" : "received-chats"
-  );
-
-  var messageImage = document.createElement("div");
-  messageImage.classList.add(
-    isOutgoing ? "outgoing-chats-img" : "received-chats-img"
-  );
-  var imageSrc = isOutgoing ? "user.png" : "chatbot.png";
-  messageImage.innerHTML = `<img src="${imageSrc}" />`;
-
-  var messageContent = document.createElement("div");
-  messageContent.classList.add(isOutgoing ? "outgoing-msg" : "received-msg");
-  var messageHTML = `
+    var messageContent = document.createElement("div");
+    messageContent.classList.add(isOutgoing ? "outgoing-msg" : "received-msg");
+    var messageHTML = `
       <div class="${isOutgoing ? "outgoing-chats-msg" : "received-msg-inbox"}">
         <p>${message}</p>
         <span class="time">${time}</span>
       </div>
     `;
-  messageContent.innerHTML = messageHTML;
+    messageContent.innerHTML = messageHTML;
 
-  messageContainer.appendChild(messageImage);
-  messageContainer.appendChild(messageContent);
-  chatContainer.appendChild(messageContainer);
-}
+    messageContainer.appendChild(messageImage);
+    messageContainer.appendChild(messageContent);
+    chatContainer.appendChild(messageContainer);
+  }
 
-// msgButton.addEventListener("click", function () {
-//  
-// });
+  // msgButton.addEventListener("click", function () {
+  //
+  // });
 
-function showUserMessage(){
-  var userMessage = inputField.value;
+  function showUserMessage() {
+    var userMessage = inputField.value;
     if (userMessage.trim() !== "") {
       createMessage(userMessage, getCurrentTime(), true);
       inputField.value = ""; // Wyczyść pole input
       scrollToBottom();
     }
-}
-
-function getCurrentTime() {
-  var now = new Date();
-  var hours = now.getHours();
-  var minutes = now.getMinutes();
-  var day = now.getDay();
-  var month = now.getMonth();
-  var year = now.getFullYear();
-
-  var timeString =
-    hours +
-    ":" +
-    (minutes < 10 ? "0" : "") +
-    minutes +
-    " " +
-    "| " +
-    day +
-    "." +
-    month +
-    "." +
-    year;
-  return timeString;
-}
-
-function scrollToBottom() {
-  var chatContainer = document.querySelector(".msg-page");
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-function slider() {
-  valPercent = (mySlider.value / mySlider.max) * 100;
-  mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
-  sliderValue.textContent = mySlider.value;
-
-  if (mySlider.value == 0) {
-    muteImg.src = "./mute.png";
-  } else {
-    muteImg.src = "./unmute.png";
   }
-}
 
-function firstMessage() {
-  if (recognisedUser) {
-    userMessage = "Witaj ... o czym chciałbyś dzisiaj porozmawiać?";
-  } else {
-    userMessage = "Cześć nieznajomy, jak masz na imię?";
+  function getCurrentTime() {
+    var now = new Date();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    var day = now.getDay();
+    var month = now.getMonth();
+    var year = now.getFullYear();
+
+    var timeString =
+      hours +
+      ":" +
+      (minutes < 10 ? "0" : "") +
+      minutes +
+      " " +
+      "| " +
+      day +
+      "." +
+      month +
+      "." +
+      year;
+    return timeString;
   }
-  createMessage(userMessage, getCurrentTime(), false);
-}
-firstMessage();
 
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
+  function scrollToBottom() {
+    var chatContainer = document.querySelector(".msg-page");
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
+  function slider() {
+    valPercent = (mySlider.value / mySlider.max) * 100;
+    mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
+    sliderValue.textContent = mySlider.value;
 
-function changeMuteBtnImage() {
-  if (mySlider.value > 0) {
-    //audio.muted = true;
-    mySlider.value = 0;
-    muteImg.src = "./mute.png";
+    if (mySlider.value == 0) {
+      muteImg.src = "http://127.0.0.1:5000/chatUI/mute.png";
+    } else {
+      muteImg.src = "http://127.0.0.1:5000/chatUI/unmute.png";
+    }
+  }
+
+  function firstMessage() {
+    if (recognisedUser) {
+      userMessage = "Witaj ... o czym chciałbyś dzisiaj porozmawiać?";
+    } else {
+      userMessage = "Cześć nieznajomy, jak masz na imię?";
+    }
+    createMessage(userMessage, getCurrentTime(), false);
+  }
+  firstMessage();
+
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+
+  function changeMuteBtnImage() {
+    if (mySlider.value > 0) {
+      //audio.muted = true;
+      mySlider.value = 0;
+      muteImg.src = "http://127.0.0.1:5000/chatUI/mute.png";
+    } else {
+      //audio.muted = false;
+      mySlider.value = 50;
+      muteImg.src = "http://127.0.0.1:5000/chatUI/unmute.png";
+    }
     slider();
-  } else {
-    //audio.muted = false;
-    mySlider.value = 50;
-    muteImg.src = "./unmute.png";
-    slider();
   }
-}
 
-navigator.mediaDevices.getUserMedia({ audio: true })
-.then(stream => {
-    // Initialize the media recorder object
-    audioRecorder = new MediaRecorder(stream);
+  muteBtn.addEventListener("click", function(){
+    changeMuteBtnImage();
+  })
 
-    // dataavailable event is fired when the recording is stopped
-    audioRecorder.addEventListener('dataavailable', e => {
+  mySlider.addEventListener("input", function(){
+    slider();
+    // changeMuteBtnImage();
+  });
+
+  navigator.mediaDevices
+    .getUserMedia({ audio: true })
+    .then((stream) => {
+      // Initialize the media recorder object
+      audioRecorder = new MediaRecorder(stream);
+
+      // dataavailable event is fired when the recording is stopped
+      audioRecorder.addEventListener("dataavailable", (e) => {
         audioChunks.push(e.data);
-    });
+      });
 
-    audioRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      audioRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
         const formData = new FormData();
-        formData.append('audio', audioBlob);
+        formData.append("audio", audioBlob);
 
         // Post data to server
         //fetch('/upload', {
@@ -156,67 +166,79 @@ navigator.mediaDevices.getUserMedia({ audio: true })
         //    body: formData,
         //});
         audioChunks = [];
+      };
+
+      // Start recording when the button is clicked and held
+      micBtn.addEventListener("mousedown", () => {
+        if (!isRecording) {
+          isRecording = true;
+          audioRecorder.start();
+        }
+      });
+
+      // Stop recording when the button is released
+      micBtn.addEventListener("mouseup", () => {
+        if (isRecording) {
+          audioRecorder.stop();
+          isRecording = false;
+        }
+      });
+    })
+    .catch((err) => {
+      console.log("Error: " + err);
+    });
+
+  sendMessageBtn.addEventListener("click", function () {
+    var formdata = new FormData();
+    var message = messageInput.value;
+    var responseChat;
+    formdata.append("message", message);
+    console.log(formdata);
+    console.log(message);
+
+    var requestOptions = {
+      method: "POST",
+      // mode: "no-cors",
+      body: formdata,
+      redirect: "follow",
     };
 
-    // Start recording when the button is clicked and held
-    micBtn.addEventListener('mousedown', () => {
-        if (!isRecording) {
-            isRecording = true;
-            audioRecorder.start();
-        }
-    });
+    fetch("http://localhost:5000/message", requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then((result) => {
+      console.log(result);
+      return result; // zwracamy wynik, aby go przekazać do kolejnego .then()
+    })
+    .then((responseChat) => {
+      createMessage(responseChat, getCurrentTime(), false);
+    })
+    .catch((error) => console.error("Error:", error));
 
-    // Stop recording when the button is released
-    micBtn.addEventListener('mouseup', () => {
-        if (isRecording) {
-            audioRecorder.stop();
-            isRecording = false;
-        }
-    });
-}).catch(err => {
-console.log('Error: ' + err);
-});
+    showUserMessage();
+  });
 
-sendMessageBtn.addEventListener("click", function () {
-  var formdata = new FormData();
-  var message = messageInput.value;
-  formdata.append("message", message);
-  console.log(formdata);
-  console.log(message);
+  // var formdata = new FormData();
+  // formdata.append("message", "data");
 
-  var requestOptions = {
-    method: "POST",
-    mode: 'no-cors',
-    body: formdata,
-    redirect: "follow",
-  };
+  // var requestOptions = {
+  //   method: 'POST',
+  //   body: formdata,
+  //   redirect: 'follow'
+  // };
 
-  fetch("http://localhost:5000/message", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+  // fetch("http://localhost:5000/message", requestOptions)
+  //   .then(response => response.text())
+  //   .then(result => console.log(result))
+  //   .catch(error => console.log('error', error));
 
-  showUserMessage()
-});
+  // // Przykład użycia dla wiadomości przychodzącej
+  // createMessage("Hi !! This is a message from Riya.", "Riya", "18:06 PM | July 24", false);
 
-// var formdata = new FormData();
-// formdata.append("message", "data");
-
-// var requestOptions = {
-//   method: 'POST',
-//   body: formdata,
-//   redirect: 'follow'
-// };
-
-// fetch("http://localhost:5000/message", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-
-// // Przykład użycia dla wiadomości przychodzącej
-// createMessage("Hi !! This is a message from Riya.", "Riya", "18:06 PM | July 24", false);
-
-// // Przykład użycia dla wiadomości wychodzącej
-// createMessage("Hi riya, Lorem ipsum...", "User", "18:30 PM | July 24", true);
-
+  // // Przykład użycia dla wiadomości wychodzącej
+  // createMessage("Hi riya, Lorem ipsum...", "User", "18:30 PM | July 24", true);
 });
