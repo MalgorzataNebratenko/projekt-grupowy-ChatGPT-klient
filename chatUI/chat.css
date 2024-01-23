@@ -24,6 +24,7 @@
 img {
     width: 50px;
     margin-top: 2px;
+    margin-left: 5px;
     vertical-align: middle;
     border-style: none;
     border-radius: 100%;
@@ -139,14 +140,14 @@ img {
     position: relative;
     margin-top: 8px;
     margin-left: 15px;
-    height: 70%;
+    height: 80%;
     width: 80px;
     border-radius: 20px;
   }
   
   /* The popup form - hidden by default */
   .form-popup {
-    height: 50%;
+    height: 60%;
     top: 25%;
     width: 20%;
     left: 40%;
@@ -220,6 +221,7 @@ img {
         height: 70%;
         margin-top: 8px;
         margin-right: 20px;
+        margin-bottom: 5px;;
         outline: none !important;
         background-color: var(--clr-light);
         float: right;

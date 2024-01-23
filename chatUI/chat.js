@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const messageInput = document.getElementById("msg-input-field");
   const sendMessageBtn = document.getElementById("send-msg-btn");
   const displayUsername = document.getElementById("display_username");
-
+  const opinionForm = document.getElementById("myForm");
+  const opinionBtn = document.getElementById("opinionBtn");
+  const submitBtn = document.getElementById("submitBtn");
+  const starrating = document.getElementById("star-rating");
   const username = data.getUsername();
   displayUsername.textContent = username;
 
@@ -122,13 +125,46 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   firstMessage();
 
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
+  opinionBtn.addEventListener("click", function(){
+    opinionForm.style.display = "block";
+  })
 
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+  submitBtn.addEventListener("click", function () {
+    var formdata = new FormData();
+    var rate = starrating.value;
+    console.log(rate);
+    formdata.append("rate", rate);
+    if (rate == null)
+    {
+      opinionForm.style.display = "none";
+    }
+    else{
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/rate", requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then((result) => {
+      console.log(result);
+      return result; // zwracamy wynik, aby go przekazać do kolejnego .then()
+    })
+    .then((responseChat) => {
+      createMessage(responseChat, getCurrentTime(), false);
+    })
+    .catch((error) => console.error("Error:", error));
+
+    opinionForm.style.display = "none";
   }
+  });
 
   function changeMuteBtnImage() {
     if (mySlider.value > 0) {
@@ -245,6 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showUserMessage();
   });
 
+  
   // var formdata = new FormData();
   // formdata.append("message", "data");
 

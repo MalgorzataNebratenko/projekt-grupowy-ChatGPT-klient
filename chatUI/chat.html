@@ -129,15 +129,15 @@
           </div>
           <!-- msg-bottom section -->
           <div class="msg-bottom">
-            <button class="open-button" onclick="openForm()">Rate us!</button>
-            <div class="form-popup" id="myForm">
+            <button id="opinionBtn" class="open-button">Rate us!</button>
+            <div class="form-popup " id="myForm" >
               How was the conversation?
               <div>
                 <img
                   class="img-opinion"
                   src="{{ url_for('static', filename='chatbot.png') }}"
                 />
-              </div>
+              </div> 
               <div>
                 <form action="" method="post" id="star-rating">
                   <input type="radio" id="star5" name="rating" value="5" />
@@ -152,7 +152,7 @@
                   <label for="star1" title="1 star"></label>
                 </form>
               </div>
-              <button type="submit" class="btn" onclick="closeForm()">
+              <button id="submitBtn" type="submit" class="btn">
                 Submit
               </button>
             </div>

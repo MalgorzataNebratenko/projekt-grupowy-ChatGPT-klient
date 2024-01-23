@@ -15,7 +15,8 @@ const capturedImage = document.getElementById("capturedImage");
 const errorMsgElement = document.getElementById("errorMsg");
 const nameInput = document.getElementById("nameInput");
 const submitNameBtn = document.getElementById("submitName");
-const labelName = document.getElementById("labelName");
+// const labelName = document.getElementById("labelName");
+const startBtn = document.getElementById("start-btn");
 
 const constraints = {
   audio: true,
@@ -95,7 +96,8 @@ function handleServerResponse(response) {
     // Jeżeli odpowiedź z serwera to 'not found', pokaż pole input
     nameInput.style.display = "block";
     submitNameBtn.style.display = "block";
-    labelName.style.display = "block";
+    // labelName.style.display = "block";
+    startBtn.style.display = "none";
     // console.log('this is response',response);
   } else {
     // Jeżeli odpowiedź jest inna, wykonaj funkcję goToChatPage()
