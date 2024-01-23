@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     messageContainer.appendChild(messageImage);
     messageContainer.appendChild(messageContent);
     chatContainer.appendChild(messageContainer);
+    scrollToBottom();
   }
 
   // msgButton.addEventListener("click", function () {
@@ -164,9 +165,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
       audioRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-        const formData = new FormData();
-        formData.append("audio", audioBlob);
+        const formdata = new FormData();
+        formdata.append("audio", audioBlob);
 
+        var requestOptions = {
+          method: "POST",
+          body: formdata,
+          redirect: "follow",
+        };
+
+        fetch("http://localhost:5000/audio", requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+          // console.log(result);
+          // Obsłuż odpowiedź z serwera
+        //   handleServerResponse(result);
+        // goToChatPage();
+        console.log(result);
+        })
+        .catch((error) => console.log("error", error));
         // Post data to server
         //fetch('/upload', {
         //    method: 'POST',
@@ -205,7 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var requestOptions = {
       method: "POST",
-      // mode: "no-cors",
       body: formdata,
       redirect: "follow",
     };
