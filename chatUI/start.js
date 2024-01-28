@@ -105,8 +105,35 @@ function handleServerResponse(response) {
     // Jeżeli odpowiedź jest inna, wykonaj funkcję goToChatPage()
     // console.log(response, '2');
     data.setUsername(response);
-    goToChatPage();
+    getUserHistoryChat(response)
+    // goToChatPage();
   }
+}
+
+function getUserHistoryChat(username){
+  const formData = new FormData();
+  formData.append("username", username);
+
+  var requestOptions = {
+    method: "POST",
+    body: formData,
+    redirect: "follow",
+  };
+
+  fetch("http://localhost:5000/chat-history", requestOptions)
+  .then((response) => {
+    console.log(response);
+    // Dodaj return, aby przekazać dane do kolejnego bloku .then
+    return response.text();
+  })
+  .then((result) => {
+    console.log(result)
+    data.setMessages(result);
+    // Obsłuż odpowiedź z serwera
+    // handleServerResponse(result);
+    goToChatPage();
+  })
+  .catch((error) => console.log("error", error));
 }
  
 function sendNameAndImage() {
@@ -122,6 +149,8 @@ function sendNameAndImage() {
     body: formData,
     redirect: "follow",
   };
+
+
  
   fetch("http://localhost:5000/new-photo", requestOptions)
     .then((response) => {
@@ -152,7 +181,7 @@ function sendImageToServer() {
     fetch("http://localhost:5000/photo", requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        // console.log(result);
+        console.log(result);
         // Obsłuż odpowiedź z serwera
         handleServerResponse(result);
       })

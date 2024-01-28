@@ -26,6 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
   recognition.lang = 'pl-PL';
   //let audioRecorder;
   //let audioChunks = [];
+
+  function atLoad(){
+    restoreMessageHistory();
+  }
+  atLoad();
  
   msgModeButton.addEventListener("click", function () {
     var element = document.body;
@@ -75,15 +80,15 @@ document.addEventListener("DOMContentLoaded", function () {
       scrollToBottom();
     }
   }
- 
+  
   function getCurrentTime() {
     var now = new Date();
     var hours = now.getHours();
     var minutes = now.getMinutes();
-    var day = now.getDay();
-    var month = now.getMonth();
+    var day = now.getDate();
+    var month = now.getMonth() + 1; // Dodaj 1, ponieważ miesiące są numerowane od 0 do 11
     var year = now.getFullYear();
- 
+  
     var timeString =
       hours +
       ":" +
@@ -125,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
     createMessage(userMessage, getCurrentTime(), false);
   }
-  firstMessage();
+
  
   opinionBtn.addEventListener("click", function(){
     opinionForm.style.display = "block";
@@ -327,25 +332,53 @@ document.addEventListener("DOMContentLoaded", function () {
  
     showUserMessage();
   });
+
+  function restoreMessageHistory() {
+    const message_history = JSON.parse(data.getMessages());
+    console.log(message_history);
+  
+    message_history.forEach(entry => {
+      // Dla każdego wpisu w historii tworzymy wiadomość użytkownika i odpowiedź modelu
+      var userMessage = entry[0];
+      var modelResponse = entry[1];
+      var datetimeString = entry[2];
+  
+      var formatedDate= formatChatDate(datetimeString)
+      // Konwertujemy string z datą na obiekt Date
+      // var datetime = new Date(datetimeString);
+  
+      // Tworzymy wiadomość użytkownika
+      createMessage(userMessage, formatedDate, true);
+  
+      // Tworzymy odpowiedź modelu
+      createMessage(modelResponse, formatedDate, false);
+    });
+    firstMessage();
+  }
+
+  function formatChatDate(datetimeString) {
+    var datetime = new Date(datetimeString);
+  
+    var hours = datetime.getHours();
+    var minutes = datetime.getMinutes();
+    var day = datetime.getDate();
+    var month = datetime.getMonth() + 1; // Dodaj 1, ponieważ miesiące są numerowane od 0 do 11
+    var year = datetime.getFullYear();
+  
+    var timeString =
+      hours +
+      ":" +
+      (minutes < 10 ? "0" : "") +
+      minutes +
+      " " +
+      "| " +
+      day +
+      "." +
+      month +
+      "." +
+      year;
+  
+    return timeString;
+  }
  
- 
-  // var formdata = new FormData();
-  // formdata.append("message", "data");
- 
-  // var requestOptions = {
-  //   method: 'POST',
-  //   body: formdata,
-  //   redirect: 'follow'
-  // };
- 
-  // fetch("http://localhost:5000/message", requestOptions)
-  //   .then(response => response.text())
-  //   .then(result => console.log(result))
-  //   .catch(error => console.log('error', error));
- 
-  // // Przykład użycia dla wiadomości przychodzącej
-  // createMessage("Hi !! This is a message from Riya.", "Riya", "18:06 PM | July 24", false);
- 
-  // // Przykład użycia dla wiadomości wychodzącej
-  // createMessage("Hi riya, Lorem ipsum...", "User", "18:30 PM | July 24", true);
 });
