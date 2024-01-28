@@ -33,4 +33,4 @@ def compareFaces(model_name, img_path, db_path): #"VGG-Face", "OpenFace"
 
 def createFaceLabelFile(model_name, img_path, db_path):
     with open('name.txt', 'w') as text_file:
-        text_file.write(compareFaces(model_name))
+        text_file.write(compareFaces(model_name, img_path, db_path))
