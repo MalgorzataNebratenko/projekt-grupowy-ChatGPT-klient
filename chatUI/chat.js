@@ -20,31 +20,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const starrating = document.getElementById("star-rating");
   const username = data.getUsername();
   displayUsername.textContent = username;
-
+ 
   let isRecording = false;
   let audioRecorder;
   let audioChunks = [];
-
+ 
   msgModeButton.addEventListener("click", function () {
     var element = document.body;
     element.classList.toggle("dark-mode");
   });
-
+ 
   function createMessage(message, time, isOutgoing) {
     var messageContainer = document.createElement("div");
     messageContainer.classList.add(
       isOutgoing ? "outgoing-chats" : "received-chats"
     );
-
+ 
     var messageImage = document.createElement("div");
     messageImage.classList.add(
       isOutgoing ? "outgoing-chats-img" : "received-chats-img"
     );
     var imageSrc = isOutgoing ? "http://127.0.0.1:5000/chatUI/user.png" : "http://127.0.0.1:5000/chatUI/chatbot.png";
-    
+ 
 // http://127.0.0.1:5000/chatUI/chatbot.png
     messageImage.innerHTML = `<img src="${imageSrc}" />`;
-
+ 
     var messageContent = document.createElement("div");
     messageContent.classList.add(isOutgoing ? "outgoing-msg" : "received-msg");
     var messageHTML = `
@@ -54,17 +54,17 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     `;
     messageContent.innerHTML = messageHTML;
-
+ 
     messageContainer.appendChild(messageImage);
     messageContainer.appendChild(messageContent);
     chatContainer.appendChild(messageContainer);
     scrollToBottom();
   }
-
+ 
   // msgButton.addEventListener("click", function () {
   //
   // });
-
+ 
   function showUserMessage() {
     var userMessage = inputField.value;
     if (userMessage.trim() !== "") {
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
       scrollToBottom();
     }
   }
-
+ 
   function getCurrentTime() {
     var now = new Date();
     var hours = now.getHours();
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var day = now.getDay();
     var month = now.getMonth();
     var year = now.getFullYear();
-
+ 
     var timeString =
       hours +
       ":" +
@@ -96,24 +96,24 @@ document.addEventListener("DOMContentLoaded", function () {
       year;
     return timeString;
   }
-
+ 
   function scrollToBottom() {
     var chatContainer = document.querySelector(".msg-page");
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
-
+ 
   function slider() {
     valPercent = (mySlider.value / mySlider.max) * 100;
     mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
     sliderValue.textContent = mySlider.value;
-
+ 
     if (mySlider.value == 0) {
       muteImg.src = "http://127.0.0.1:5000/chatUI/mute.png";
     } else {
       muteImg.src = "http://127.0.0.1:5000/chatUI/unmute.png";
     }
   }
-
+ 
   function firstMessage() {
     const userMessage = "Witaj " + username + ", o czym chciałbyś porozmawiać?"
     // if (recognisedUser) {
@@ -124,28 +124,31 @@ document.addEventListener("DOMContentLoaded", function () {
     createMessage(userMessage, getCurrentTime(), false);
   }
   firstMessage();
-
+ 
   opinionBtn.addEventListener("click", function(){
     opinionForm.style.display = "block";
   })
-
+ 
   submitBtn.addEventListener("click", function () {
     var formdata = new FormData();
-    var rate = starrating.value;
+    // Get the selected rating
+    var selectedRating = document.querySelector('input[name="rating"]:checked');
+    var rate = selectedRating ? selectedRating.value : null;
     console.log(rate);
+    formdata.append("username", username)
     formdata.append("rate", rate);
     if (rate == null)
     {
       opinionForm.style.display = "none";
     }
     else{
-
+ 
     var requestOptions = {
       method: "POST",
       body: formdata,
       redirect: "follow",
     };
-
+ 
     fetch("http://localhost:5000/rate", requestOptions)
     .then((response) => {
       if (!response.ok) {
@@ -161,11 +164,11 @@ document.addEventListener("DOMContentLoaded", function () {
       createMessage(responseChat, getCurrentTime(), false);
     })
     .catch((error) => console.error("Error:", error));
-
+ 
     opinionForm.style.display = "none";
   }
   });
-
+ 
   function changeMuteBtnImage() {
     if (mySlider.value > 0) {
       //audio.muted = true;
@@ -178,38 +181,38 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     slider();
   }
-
+ 
   muteBtn.addEventListener("click", function(){
     changeMuteBtnImage();
   })
-
+ 
   mySlider.addEventListener("input", function(){
     slider();
     // changeMuteBtnImage();
   });
-
+ 
   navigator.mediaDevices
     .getUserMedia({ audio: true })
     .then((stream) => {
       // Initialize the media recorder object
       audioRecorder = new MediaRecorder(stream);
-
+ 
       // dataavailable event is fired when the recording is stopped
       audioRecorder.addEventListener("dataavailable", (e) => {
         audioChunks.push(e.data);
       });
-
+ 
       audioRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
         const formdata = new FormData();
         formdata.append("audio", audioBlob);
-
+ 
         var requestOptions = {
           method: "POST",
           body: formdata,
           redirect: "follow",
         };
-
+ 
         fetch("http://localhost:5000/audio", requestOptions)
         .then((response) => response.text())
         .then((result) => {
@@ -227,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //});
         audioChunks = [];
       };
-
+ 
       // Start recording when the button is clicked and held
       micBtn.addEventListener("mousedown", () => {
         if (!isRecording) {
@@ -235,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
           audioRecorder.start();
         }
       });
-
+ 
       // Stop recording when the button is released
       micBtn.addEventListener("mouseup", () => {
         if (isRecording) {
@@ -247,21 +250,22 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((err) => {
       console.log("Error: " + err);
     });
-
+ 
   sendMessageBtn.addEventListener("click", function () {
     var formdata = new FormData();
     var message = messageInput.value;
     var responseChat;
+    formdata.append("username", username);
     formdata.append("message", message);
     console.log(formdata);
     console.log(message);
-
+ 
     var requestOptions = {
       method: "POST",
       body: formdata,
       redirect: "follow",
     };
-
+ 
     fetch("http://localhost:5000/message", requestOptions)
     .then((response) => {
       if (!response.ok) {
@@ -277,28 +281,28 @@ document.addEventListener("DOMContentLoaded", function () {
       createMessage(responseChat, getCurrentTime(), false);
     })
     .catch((error) => console.error("Error:", error));
-
+ 
     showUserMessage();
   });
-
-  
+ 
+ 
   // var formdata = new FormData();
   // formdata.append("message", "data");
-
+ 
   // var requestOptions = {
   //   method: 'POST',
   //   body: formdata,
   //   redirect: 'follow'
   // };
-
+ 
   // fetch("http://localhost:5000/message", requestOptions)
   //   .then(response => response.text())
   //   .then(result => console.log(result))
   //   .catch(error => console.log('error', error));
-
+ 
   // // Przykład użycia dla wiadomości przychodzącej
   // createMessage("Hi !! This is a message from Riya.", "Riya", "18:06 PM | July 24", false);
-
+ 
   // // Przykład użycia dla wiadomości wychodzącej
   // createMessage("Hi riya, Lorem ipsum...", "User", "18:30 PM | July 24", true);
 });
