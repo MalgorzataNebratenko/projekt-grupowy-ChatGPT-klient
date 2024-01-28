@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
  
   function slider() {
-    valPercent = (mySlider.value / mySlider.max) * 100;
+    var valPercent = (mySlider.value / mySlider.max) * 100;
     mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
     sliderValue.textContent = mySlider.value;
  
@@ -278,6 +278,11 @@ document.addEventListener("DOMContentLoaded", function () {
       return result; // zwracamy wynik, aby go przekazać do kolejnego .then()
     })
     .then((responseChat) => {
+      var msg = new SpeechSynthesisUtterance();
+      msg.text = responseChat;
+      msg.lang = 'pl-PL';
+      msg.volume = sliderValue.textContent / 100;
+      window.speechSynthesis.speak(msg);
       createMessage(responseChat, getCurrentTime(), false);
     })
     .catch((error) => console.error("Error:", error));
