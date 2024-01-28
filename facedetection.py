@@ -5,13 +5,7 @@ from pathlib import Path
 
 file_path = os.getcwd().replace("\\", "/")
 
-# wskazanie pojedynczego zdjęcia do porównania
-img_path = file_path + "/img.jpg"
-
-# wskazanie miejsca bazy zdjęć (w postaci folderu), w którym znajdują sie zdjęcia do porównania
-db_path = file_path + "/face"
-
-def compareFaces(model_name): #"VGG-Face", "OpenFace"
+def compareFaces(model_name, img_path, db_path): #"VGG-Face", "OpenFace"
 
     # porównanie zdjęcia wejciowego ze zbiorem zdjęć znajdującymi się w podanym folderze
     # zwraca wszystkie podobne zdjęcia do podanego
@@ -37,6 +31,6 @@ def compareFaces(model_name): #"VGG-Face", "OpenFace"
     # wypisanie imienia na podstawie nazwy zdjęcia
     return name
 
-def createFaceLabelFile(model_name):
+def createFaceLabelFile(model_name, img_path, db_path):
     with open('name.txt', 'w') as text_file:
         text_file.write(compareFaces(model_name))
