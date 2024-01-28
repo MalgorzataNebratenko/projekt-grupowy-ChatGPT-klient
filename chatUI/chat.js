@@ -22,8 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
   displayUsername.textContent = username;
  
   let isRecording = false;
-  let audioRecorder;
-  let audioChunks = [];
+  let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.msSpeechRecognition)();
+  recognition.lang = 'pl-PL';
+  //let audioRecorder;
+  //let audioChunks = [];
  
   msgModeButton.addEventListener("click", function () {
     var element = document.body;
@@ -103,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
  
   function slider() {
-    valPercent = (mySlider.value / mySlider.max) * 100;
+    var valPercent = (mySlider.value / mySlider.max) * 100;
     mySlider.style.background = `linear-gradient(to right, #158fcc ${valPercent}%, #a9e5ff ${valPercent}%)`;
     sliderValue.textContent = mySlider.value;
  
@@ -190,29 +192,29 @@ document.addEventListener("DOMContentLoaded", function () {
     slider();
     // changeMuteBtnImage();
   });
- 
+ /*
   navigator.mediaDevices
     .getUserMedia({ audio: true })
     .then((stream) => {
       // Initialize the media recorder object
       audioRecorder = new MediaRecorder(stream);
- 
+
       // dataavailable event is fired when the recording is stopped
       audioRecorder.addEventListener("dataavailable", (e) => {
         audioChunks.push(e.data);
       });
- 
+
       audioRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
         const formdata = new FormData();
         formdata.append("audio", audioBlob);
- 
+
         var requestOptions = {
           method: "POST",
           body: formdata,
           redirect: "follow",
         };
- 
+
         fetch("http://localhost:5000/audio", requestOptions)
         .then((response) => response.text())
         .then((result) => {
@@ -230,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //});
         audioChunks = [];
       };
- 
+
       // Start recording when the button is clicked and held
       micBtn.addEventListener("mousedown", () => {
         if (!isRecording) {
@@ -238,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
           audioRecorder.start();
         }
       });
- 
+
       // Stop recording when the button is released
       micBtn.addEventListener("mouseup", () => {
         if (isRecording) {
@@ -250,6 +252,42 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((err) => {
       console.log("Error: " + err);
     });
+    */
+
+  const startRecording = () => {
+    recognition.onstart = () => {
+        //console.log('Recording started');
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        messageInput.value = transcript;
+        //console.log(transcript);
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Error occurred:', event.error);
+    };
+    recognition.start();
+  };
+
+  // Start recording when the button is clicked and held
+  micBtn.addEventListener("mousedown", () => {
+    if (!isRecording) {
+      isRecording = true;
+      startRecording();
+    }
+  });
+
+  // Stop recording when the button is released
+  micBtn.addEventListener("mouseup", () => {
+    if (isRecording) {
+      isRecording = false;
+      if (recognition) {
+        recognition.stop();
+      }
+    }
+  });
  
   sendMessageBtn.addEventListener("click", function () {
     var formdata = new FormData();
@@ -278,6 +316,11 @@ document.addEventListener("DOMContentLoaded", function () {
       return result; // zwracamy wynik, aby go przekazać do kolejnego .then()
     })
     .then((responseChat) => {
+      var msg = new SpeechSynthesisUtterance();
+      msg.text = responseChat;
+      msg.lang = 'pl-PL';
+      msg.volume = sliderValue.textContent / 100;
+      window.speechSynthesis.speak(msg);
       createMessage(responseChat, getCurrentTime(), false);
     })
     .catch((error) => console.error("Error:", error));
