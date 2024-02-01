@@ -1,4 +1,3 @@
-// import { username, messages } from 'data.js';
 import * as data from './data.js';
 document.addEventListener("DOMContentLoaded", function () {
   var chatContainer = document.querySelector(".msg-page");
@@ -24,8 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let isRecording = false;
   let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.msSpeechRecognition)();
   recognition.lang = 'pl-PL';
-  //let audioRecorder;
-  //let audioChunks = [];
 
   function atLoad(){
     restoreMessageHistory();
@@ -49,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     var imageSrc = isOutgoing ? "http://127.0.0.1:5000/chatUI/user.png" : "http://127.0.0.1:5000/chatUI/chatbot.png";
  
-// http://127.0.0.1:5000/chatUI/chatbot.png
     messageImage.innerHTML = `<img src="${imageSrc}" />`;
  
     var messageContent = document.createElement("div");
@@ -67,16 +63,12 @@ document.addEventListener("DOMContentLoaded", function () {
     chatContainer.appendChild(messageContainer);
     scrollToBottom();
   }
- 
-  // msgButton.addEventListener("click", function () {
-  //
-  // });
- 
+
   function showUserMessage() {
     var userMessage = inputField.value;
     if (userMessage.trim() !== "") {
       createMessage(userMessage, getCurrentTime(), true);
-      inputField.value = ""; // Wyczyść pole input
+      inputField.value = ""; 
       scrollToBottom();
     }
   }
@@ -86,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var hours = now.getHours();
     var minutes = now.getMinutes();
     var day = now.getDate();
-    var month = now.getMonth() + 1; // Dodaj 1, ponieważ miesiące są numerowane od 0 do 11
+    var month = now.getMonth() + 1; 
     var year = now.getFullYear();
   
     var timeString =
@@ -123,11 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
  
   function firstMessage() {
     const userMessage = "Witaj " + username + ", o czym chciałbyś porozmawiać?"
-    // if (recognisedUser) {
-    //   userMessage = "Witaj ... o czym chciałbyś dzisiaj porozmawiać?";
-    // } else {
-    //   userMessage = "Cześć nieznajomy, jak masz na imię?";
-    // }
     createMessage(userMessage, getCurrentTime(), false);
   }
 
@@ -138,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
  
   submitBtn.addEventListener("click", function () {
     var formdata = new FormData();
-    // Get the selected rating
     var selectedRating = document.querySelector('input[name="rating"]:checked');
     var rate = selectedRating ? selectedRating.value : null;
     console.log(rate);
@@ -165,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then((result) => {
       console.log(result);
-      return result; // zwracamy wynik, aby go przekazać do kolejnego .then()
+      return result; 
     })
     .then((responseChat) => {
       createMessage(responseChat, getCurrentTime(), false);
@@ -178,11 +164,9 @@ document.addEventListener("DOMContentLoaded", function () {
  
   function changeMuteBtnImage() {
     if (mySlider.value > 0) {
-      //audio.muted = true;
       mySlider.value = 0;
       muteImg.src = "http://127.0.0.1:5000/chatUI/mute.png";
     } else {
-      //audio.muted = false;
       mySlider.value = 50;
       muteImg.src = "http://127.0.0.1:5000/chatUI/unmute.png";
     }
@@ -195,79 +179,15 @@ document.addEventListener("DOMContentLoaded", function () {
  
   mySlider.addEventListener("input", function(){
     slider();
-    // changeMuteBtnImage();
   });
- /*
-  navigator.mediaDevices
-    .getUserMedia({ audio: true })
-    .then((stream) => {
-      // Initialize the media recorder object
-      audioRecorder = new MediaRecorder(stream);
-
-      // dataavailable event is fired when the recording is stopped
-      audioRecorder.addEventListener("dataavailable", (e) => {
-        audioChunks.push(e.data);
-      });
-
-      audioRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-        const formdata = new FormData();
-        formdata.append("audio", audioBlob);
-
-        var requestOptions = {
-          method: "POST",
-          body: formdata,
-          redirect: "follow",
-        };
-
-        fetch("http://localhost:5000/audio", requestOptions)
-        .then((response) => response.text())
-        .then((result) => {
-          // console.log(result);
-          // Obsłuż odpowiedź z serwera
-        //   handleServerResponse(result);
-        // goToChatPage();
-        console.log(result);
-        })
-        .catch((error) => console.log("error", error));
-        // Post data to server
-        //fetch('/upload', {
-        //    method: 'POST',
-        //    body: formData,
-        //});
-        audioChunks = [];
-      };
-
-      // Start recording when the button is clicked and held
-      micBtn.addEventListener("mousedown", () => {
-        if (!isRecording) {
-          isRecording = true;
-          audioRecorder.start();
-        }
-      });
-
-      // Stop recording when the button is released
-      micBtn.addEventListener("mouseup", () => {
-        if (isRecording) {
-          audioRecorder.stop();
-          isRecording = false;
-        }
-      });
-    })
-    .catch((err) => {
-      console.log("Error: " + err);
-    });
-    */
 
   const startRecording = () => {
     recognition.onstart = () => {
-        //console.log('Recording started');
     };
 
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         messageInput.value = transcript;
-        //console.log(transcript);
     };
 
     recognition.onerror = (event) => {
@@ -276,7 +196,6 @@ document.addEventListener("DOMContentLoaded", function () {
     recognition.start();
   };
 
-  // Start recording when the button is clicked and held
   micBtn.addEventListener("mousedown", () => {
     if (!isRecording) {
       isRecording = true;
@@ -284,7 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Stop recording when the button is released
   micBtn.addEventListener("mouseup", () => {
     if (isRecording) {
       isRecording = false;
@@ -318,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then((result) => {
       console.log(result);
-      return result; // zwracamy wynik, aby go przekazać do kolejnego .then()
+      return result; 
     })
     .then((responseChat) => {
       var msg = new SpeechSynthesisUtterance();
@@ -338,19 +256,13 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(message_history);
   
     message_history.forEach(entry => {
-      // Dla każdego wpisu w historii tworzymy wiadomość użytkownika i odpowiedź modelu
       var userMessage = entry[0];
       var modelResponse = entry[1];
       var datetimeString = entry[2];
   
       var formatedDate= formatChatDate(datetimeString)
-      // Konwertujemy string z datą na obiekt Date
-      // var datetime = new Date(datetimeString);
-  
-      // Tworzymy wiadomość użytkownika
+
       createMessage(userMessage, formatedDate, true);
-  
-      // Tworzymy odpowiedź modelu
       createMessage(modelResponse, formatedDate, false);
     });
     firstMessage();
@@ -362,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var hours = datetime.getHours();
     var minutes = datetime.getMinutes();
     var day = datetime.getDate();
-    var month = datetime.getMonth() + 1; // Dodaj 1, ponieważ miesiące są numerowane od 0 do 11
+    var month = datetime.getMonth() + 1; 
     var year = datetime.getFullYear();
   
     var timeString =
@@ -380,5 +292,4 @@ document.addEventListener("DOMContentLoaded", function () {
   
     return timeString;
   }
- 
 });
